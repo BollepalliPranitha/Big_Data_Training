@@ -1,0 +1,67 @@
+task3
+sed 's/"//g; s/,/\t/g' data-files/airtravel.csv > data-files/airtravel_clean.tsv
+
+
+task1
+
+#!/bin/bash
+task2 filter data.sh
+startyear=$1
+endyear=$2
+file='data-files/airtravel.csv'
+headers=$ (head n 1 $file | sed 's/"//g')
+# Print the headers for debugging
+echo "Headers: '$headers'"
+# Find the column numbers of years that fall between startyear and endyear
+year_columns=()
+# Extracting each year from the headers (after "Month" column)
+echo "Extracting years from the headers:"
+# Extract the column years (remove "Month" part and split by commas)
+header header_column columns=$(echo $headers | tr ',' '\n' | tail -n +2)
+# Debug: Print each year and check its value
+for year in $header columns; do
+# Remove leading/trailing spaces
+year=$(echo $year | sed 's/^[[:space:]]*//;s/[[:space:)]*$//')
+echo "Processing year: '$year'"
+# Compare the year with the start and end years
+if [ "$year" -ge "$startyear" ] && [ "$year" -le "$endyear" ]; then
+# Find the column number of the year in the header by matching the year directly
+column_number=$(echo $headers | tr ',' '\n' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | grep -n "^$year$" | cut -d: -f1)
+# Debug: Print the column number that is being matched echo "Matched column number for year $year: $column number"
+if [ -n "$column number" ); then year_columns+=($column_number)
+fi
+task2 filter data.sh
+fi
+done
+# Print year_columns for debugging echo "Year Columns: ${year_columns[@]}"
+# If no valid columns found, exit if [ ${#year_columns[@]} -eq 0 ]; then echo "No years in the given range!"
+exit 1
+fi
+# Print the corresponding columns awk -F, v years="${year_columns[*]}" '
+BEGIN {
+split (years, arr, "");
+task2 filter data.sh
+}
+for (i in arr) columns (arr[i]] = 1;
+# Always print the first column (Month)
+printf "%s", $1;
+# Print the selected year columns
+if (i in columns) {
+for (i=2; i < NF; i++) { }
+printf "%s", $i;
+}
+print "";
+' $file
+
+task 1
+
+location="data-files/airtravel.csv"
+filename=$(basename "$location")
+echo "Filename: $filename"
+lines=$(tail n +2 $location | wc -1)
+total lines_excluding_header=$lines
+echo "$total lines excluding header"
+columns=$ (head -n 1 "$location" | sed 's/[^,]//g' | wc -c)
+echo "columns: $columns"
+first 3 lines=$ (head -n 3 "$location")
+echo "$first 3 lines"
